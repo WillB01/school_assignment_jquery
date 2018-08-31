@@ -17,6 +17,23 @@ import Bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
 // Det ska finnas en möjlighet att rensa sökfältet och alla avgångar.
 
 // Sök-knappen ska vara avaktiverad tills användaren har fyllt i något i fältet.
+
+
+// VG VG VG
+
+// Visa en spinner eller progress bar när man söker på hållplatser och visar avgångar. Se till att spinner/progress bar är logiskt placerade relaterat till sökningen och laddningen av hållplatser och avgångar.
+
+// * Utökad validering: Om den angivna hållplatsen inte finns så markera sök-fältet med röd färg och med text nedanför som säger ”Hållplatsen finns inte”.
+
+// * Utökad validering: sök-knappen ska vara avaktiverad tills användaren har fyllt i fältet med en giltig avgång, dvs avgångar som endast finns i SLs databas.
+
+// * Lägg till en knapp som uppdaterar avgångarna för en given hållplats utifrån klockslaget som uppdateringen skedde.
+
+// * Användaren ska kunna klicka på en avgång för att se hela dess färd, alla hållplatser mellan start och slut-station. (Tips: Använd en modal. Det går dock att göra det på andra sätt som är mer UX-vänliga).
+
+// * Visa matchande resultat i sökfälten medan användaren fyller i bokstav för bokstav. Detta kallas typeahead (bra att veta för google-sökning). (Tips! Börja denna sökning när användaren har angett minst tre bokstäver. Kan du se vilka fördelar det ger?)
+
+// * Implementera sökhistorik i sökfältet för hållplatser. Den ska endast visa en lista av 5 senaste sökningarna när sökfältet är aktiverat. Listan försvinner när användaren börjar skriva i sökfältet. Om en ny hållplats tillkommer så ska den senast sparade hållplatsen försvinna och den nya läggs till överst (first in last out). (Tips! Använd sessionStorage. Det finns också localStorage, men varför rekommenderar vi inte det?)
 let searchRealTime = "api/realtime/";
 let searchStopsUrl = "api/search/";
 let userSearchInput = "";
@@ -58,7 +75,15 @@ $(function () {
     $("#search-btn").on("click", function () { //Get Stops
         resetShowData();
         getStopLocation();
+        $(document).ajaxStart(function() {
+            $(".loader").addClass("start");
+          });
+          $(document).ajaxComplete(function() {
+            $(".loader").removeClass("start");
+          });
     });
+
+    
 
 
     let searchWithEnterKey = (search, event) => {
@@ -100,7 +125,7 @@ $(function () {
                 for (let i = 0; i < value.length; i++) {
                     output +=
                         `<div class="${value[i].name}-container dim">
-                        <a href="#" class="specific-station ${value[i].id} dim" data-type="unloaded">${value[i].name}</a>        
+                        <a href="#" class="specific-station ${value[i].id} ${value[i].name} dim" data-type="unloaded">${value[i].name}</a>        
                     </div>`;
                     stopAndId.push({
                         'name': value[i].name,
@@ -108,6 +133,7 @@ $(function () {
                     });
                 }
             });
+            
 
             output += "</div>"
             document.querySelector("#show-data").innerHTML = output + " " + userTime;
@@ -116,22 +142,37 @@ $(function () {
             
             $('.dim').click(function (event) {
                 $(document).ajaxStart(function() {
-                    $( ".info" ).text( "Loading" );
+                    // $( ".info" ).text( "Loading" );
                     $(".loader").addClass("start");
+                    $("#show-data").css("display","none");
                   });
                   $(document).ajaxComplete(function() {
-                    $( ".info" ).text( "Visa tider" );
+                    $("#show-data").css("display","block");
+                    
+                    // $(`.info`).text( "Visa tider" );
+                    
                     $(".loader").removeClass("start");
+                    $(`.${event.target.classList[1]}`).css("color","red");
+                    $(`.${event.target.classList[1]}`).append("v");
+                    // $(".info").click(function(e) {
+                    //     $(`.${event.target.innerHTML}`).click(function(e){
+                    //         e.target.innerHTML = "kewl";
+                    //     }); 
+                    //         return false;
+                    //   });
                   });
+                  
                 if ($(this).attr("data-type") === "unloaded") {
                     $(this).attr("data-type", "loaded");
                     getDepatureTime(stopAndId, event.target.innerHTML);
+                    
                     
                 }
                 var isDim = $(event.target).is('.dim');
                 if (isDim) { //make sure I am a dim element
                     $('.hidden', this).toggle(); // p00f
                 }
+               
                 
             });
 
@@ -170,7 +211,7 @@ let getDepatureTime = (stopAndId, userClickStation) => {
             for (let i = 0; i < value.length; i++) {
                 console.log(value[i].time + " " + value[i].name);
                 output = `<p class="depature hidden">${value[i].time} ${value[i].direction} ${value[i].name}</p>`;
-                $(`.${id}`).before(`<div>${output}</div>`);
+                $(`.${id}`).after(`<div>${output}</div>`);
               
                 // $(`.${id}`).after($(`<p class="depature">${value[i].time} ${value[i].direction}</p>` ));
                 // $(`<p class="depature">${value[i].time} ${value[i].direction}</p>` ).insertAfter(`.${id}`);

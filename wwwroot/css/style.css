@@ -2,6 +2,11 @@
     padding: 0;
     margin: 0;
 }
+a:hover{
+    text-decoration: none;
+    border:none;
+    
+}
 
 .site{
     max-width: 50em;

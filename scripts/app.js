@@ -87,12 +87,20 @@ $(function () {
 
         $.get(searchStopsUrl + userSearchInput, function (response) {
             let stopAndId = [];
-            output += "<h3>Hållplatser:</h3><ul>"
+            output += 
+            `<h3>Hållplatser:</h3>
+                <div class="show-time-container">
+                    <a href="#" class="info"></a>
+                </div>
+                
+                <div>
+                
+            `;
             $.each(response, function (key, value) {
                 for (let i = 0; i < value.length; i++) {
                     output +=
                         `<div class="${value[i].name}-container dim">
-                        <a href="#" class="specific-station ${value[i].id} dim" data-type="unloaded">${value[i].name}</a>           
+                        <a href="#" class="specific-station ${value[i].id} dim" data-type="unloaded">${value[i].name}</a>        
                     </div>`;
                     stopAndId.push({
                         'name': value[i].name,
@@ -101,18 +109,18 @@ $(function () {
                 }
             });
 
-            output += "</ul>"
+            output += "</div>"
             document.querySelector("#show-data").innerHTML = output + " " + userTime;
 
             console.log(stopAndId[0]);
             
             $('.dim').click(function (event) {
                 $(document).ajaxStart(function() {
-                    $( ".log" ).text( "Loading" );
+                    $( ".info" ).text( "Loading" );
                     $(".loader").addClass("start");
                   });
                   $(document).ajaxComplete(function() {
-                    $( ".log" ).text( "Visa tider" );
+                    $( ".info" ).text( "Visa tider" );
                     $(".loader").removeClass("start");
                   });
                 if ($(this).attr("data-type") === "unloaded") {

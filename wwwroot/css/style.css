@@ -1,0 +1,62 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.site{
+    max-width: 50em;
+    margin: 0 auto;
+}
+
+#form-stop{
+    background: rgb(245, 242, 242);
+    padding: 2em;
+}
+
+.dim {
+    cursor: pointer;
+}
+.dim .hidden {
+
+    display: none;
+}
+
+/*LOOOOADDDDER*/
+.start {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  
+  }
+
+  .end{
+      display: none;
+  }
+  
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+/*/////////////////////*/
+
+
+
+
+/* .dim .hidden:first-child {
+
+} */
+
+/* @supports (grid-area: auto){
+
+}; */
+

@@ -75,15 +75,15 @@ $(function () {
     $("#search-btn").on("click", function () { //Get Stops
         resetShowData();
         getStopLocation();
-        $(document).ajaxStart(function() {
+        $(document).ajaxStart(function () {
             $(".loader").addClass("start");
-          });
-          $(document).ajaxComplete(function() {
+        });
+        $(document).ajaxComplete(function () {
             $(".loader").removeClass("start");
-          });
+        });
     });
 
-    
+
 
 
     let searchWithEnterKey = (search, event) => {
@@ -112,8 +112,8 @@ $(function () {
 
         $.get(searchStopsUrl + userSearchInput, function (response) {
             let stopAndId = [];
-            output += 
-            `<h3>Hållplatser:</h3>
+            output +=
+                `<h3 class="stations">Hållplatser:</h3>
                 <div class="show-time-container">
                     <a href="#" class="info"></a>
                 </div>
@@ -133,47 +133,48 @@ $(function () {
                     });
                 }
             });
-            
+
 
             output += "</div>"
             document.querySelector("#show-data").innerHTML = output + " " + userTime;
 
             console.log(stopAndId[0]);
-            
+
             $('.dim').click(function (event) {
-                $(document).ajaxStart(function() {
+                $(document).ajaxStart(function () {
                     // $( ".info" ).text( "Loading" );
                     $(".loader").addClass("start");
-                    $("#show-data").css("display","none");
-                  });
-                  $(document).ajaxComplete(function() {
-                    $("#show-data").css("display","block");
-                    
+                    $("#show-data").css("display", "none");
+                });
+                $(document).ajaxComplete(function () {
+                    $("#show-data").css("display", "block");
+
                     // $(`.info`).text( "Visa tider" );
-                    
+
                     $(".loader").removeClass("start");
-                    $(`.${event.target.classList[1]}`).css("color","red");
-                    $(`.${event.target.classList[1]}`).append("v");
+                    $(`.stations`).html(`Hållplats: ${event.target.innerHTML}`);
+                    $(`.${event.target.classList[1]}`).css("color", "red");
+                    // $(`.${event.target.classList[1]}`).html("tider");
                     // $(".info").click(function(e) {
                     //     $(`.${event.target.innerHTML}`).click(function(e){
                     //         e.target.innerHTML = "kewl";
                     //     }); 
                     //         return false;
                     //   });
-                  });
-                  
+                });
+
                 if ($(this).attr("data-type") === "unloaded") {
                     $(this).attr("data-type", "loaded");
                     getDepatureTime(stopAndId, event.target.innerHTML);
-                    
-                    
+
+
                 }
                 var isDim = $(event.target).is('.dim');
                 if (isDim) { //make sure I am a dim element
                     $('.hidden', this).toggle(); // p00f
                 }
-               
-                
+
+
             });
 
             // $(`.specific-station`).click(function (e) {
@@ -212,14 +213,15 @@ let getDepatureTime = (stopAndId, userClickStation) => {
                 console.log(value[i].time + " " + value[i].name);
                 output = `<p class="depature hidden">${value[i].time} ${value[i].direction} ${value[i].name}</p>`;
                 $(`.${id}`).after(`<div>${output}</div>`);
-              
+
                 // $(`.${id}`).after($(`<p class="depature">${value[i].time} ${value[i].direction}</p>` ));
                 // $(`<p class="depature">${value[i].time} ${value[i].direction}</p>` ).insertAfter(`.${id}`);
             }
         });
-       
+
     });
     console.log(id);
+    
 };
 
 
@@ -229,3 +231,63 @@ let resetShowData = () => {
     $("#show-data").html("");
     output = "";
 };
+
+$(".specific-station").click(function(){
+    $("specific-station").addClass("specific-station-effect");
+});
+
+
+
+///////////////////////CHECKBOX
+$(document).ready(function () {
+    $("#checkbox-tbanna").on("click", function () {
+        let check = $("#checkbox-tbanna").prop("checked");
+        
+        if (check) {
+            if ($('.checkbox-tbanna-class i').hasClass('fa-square')) {
+                $('.checkbox-tbanna-class i').removeClass('fa-square').addClass('fa-check-square');
+                
+            }
+        } else {
+            if ($('.checkbox-tbanna-class i').hasClass('fa-check-square')) {
+                $('.checkbox-tbanna-class i').removeClass('fa-check-square').addClass('fa-square');
+               
+            }
+        }
+        
+    });
+    $("#checkbox-pendel").on("click", function () {
+        let check = $("#checkbox-pendel").prop("checked");
+        
+        if (check) {
+            if ($('.checkbox-pendel-class i').hasClass('fa-square')) {
+                $('.checkbox-pendel-class i').removeClass('fa-square').addClass('fa-check-square');
+                
+            }
+        } else {
+            if ($('.checkbox-pendel-class i').hasClass('fa-check-square')) {
+                $('.checkbox-pendel-class i').removeClass('fa-check-square').addClass('fa-square');
+               
+            }
+        }
+        
+    });
+    $("#checkbox-buss").on("click", function () {
+        let check = $("#checkbox-buss").prop("checked");
+        
+        if (check) {
+            if ($('.checkbox-buss-class i').hasClass('fa-square')) {
+                $('.checkbox-buss-class i').removeClass('fa-square').addClass('fa-check-square');
+                
+            }
+        } else {
+            if ($('.checkbox-buss-class i').hasClass('fa-check-square')) {
+                $('.checkbox-buss-class i').removeClass('fa-check-square').addClass('fa-square');
+               
+            }
+        }
+        
+    });
+    
+    
+});

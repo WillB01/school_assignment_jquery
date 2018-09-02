@@ -1,21 +1,140 @@
 *{
     padding: 0;
     margin: 0;
+    outline:none;
+   
+}
+a{
+    color: white;
+    font-family: 'Archivo', sans-serif;
 }
 a:hover{
     text-decoration: none;
     border:none;
     
 }
+input:focus {outline:none;}
+button {
 
-.site{
-    max-width: 50em;
-    margin: 0 auto;
+        -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+        -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+        -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+        -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+        transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+        display: block;
+        /* margin: 20px auto; */
+        max-width: 180px;
+        text-decoration: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        background: white;
+        cursor: pointer;
+        border: none;
+        outline:none;
 }
 
+button {
+    color: rgba(30, 22, 54, 0.6);
+    box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+    
+}
+button:focus{
+    outline:none;
+}
+
+button:hover {
+    color: rgba(255, 255, 255, 0.85);
+    box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+    animation: shrink-bounce 200ms cubic-bezier(.4,.0,.23,1);
+}
+
+
+.site{
+    /* max-width: 5em; */
+    margin: 0 auto;
+    font-family: 'Archivo', sans-serif;
+    
+}
+
+#search-input {
+    width: 70%;
+    color: rgba(30, 22, 54, 0.6);
+    box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+    border: none;
+    border-radius: 4px;
+    padding: 1em;
+}
+
+
+
+.my-checkbox input {
+    background: none;
+    background: red;
+    
+}
+
+h1{
+    width: 100%;
+    margin: 0.5em;
+    color: #f3f3f3;
+    font-weight: 50pz;
+    
+   
+   
+}
+
+#flex-container{
+    display: flex;
+    Height: 100vh;
+    width: 100%;
+    border: solid 0.5em rgb(246, 246, 246);
+   
+}
+
+#search-container{
+    width: 30%;
+   box-sizing: border-box;
+  border-radius:0 20px 0 0;
+ 
+    flex-shrink: inherit;
+  
+}
+
+#main-content{
+    overflow: scroll;
+    width: 70%;
+    background: #2A363B;
+    border-radius:0 20px 0 0;
+    
+}
+
+#show-data{
+    background: #FF847C;
+    padding:2em;
+    
+    
+    
+}
+
+
+.specific-station-effect{
+    overflow-y: hidden;
+	max-height: 500px; /* approximate max height */
+
+	transition-property: all;
+	transition-duration: .10s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1); 
+}
+
+
 #form-stop{
-    background: rgb(245, 242, 242);
+   
+ 
+    /* border-right: 0.5em solid rgb(255, 209, 124); */
+  
+    
     padding: 2em;
+    
 }
 
 .dim {
@@ -64,4 +183,116 @@ a:hover{
 /* @supports (grid-area: auto){
 
 }; */
+
+#checkbox-container{
+    margin: 1em auto;
+    height: 150px;
+    float: left;
+    
+    
+}
+.checkbox-all{
+    width: 100%;
+   
+
+}
+
+.checkboxtext{
+    color: rgba(30, 22, 54, 0.6);
+    font-size: 0.8em;
+    
+}
+input[type="checkbox"] { 
+    display: none;
+
+}
+
+input[type="checkbox"] + label {
+       /* defines the size of the check box */
+
+    cursor: pointer;
+    font-size:  1.5em;
+    -moz-border-radius: 70px;
+    -webkit-border-radius: 70px;
+    transition: ease-in-out 20ms;
+    border-radius: 70px;
+    
+   
+    
+}
+
+input[type="checkbox"] + label i {
+    /* border:  1em solid #E3E7F2; */
+    padding: 10px 10px 10px 0;
+    -moz-border-radius: 70px;
+    -webkit-border-radius: 70px;
+    border-radius: 70px;
+    color: rgba(30, 22, 54, 0.6);
+    
+    
+}
+
+input[type="checkbox"]:checked + label i{
+    color: #5CA375;
+    transition: color 250ms cubic-bezier(.4,.0,.23,1);
+    animation: bigger 200ms cubic-bezier(.4,.0,.23,1);
+  
+    
+}
+input[type="checkbox"]:not(:checked) + label i{
+  
+    animation: shrink-bounce 200ms cubic-bezier(.4,.0,.23,1);
+
+}
+input[type="checkbox"]:checked + label .checkboxtext{
+    color: #5CA375;
+    animation: bigger 200ms cubic-bezier(.4,.0,.23,1);
+  
+    
+}
+
+
+
+@keyframes bigger {
+    0% { transform: scale(0); }
+    30% { transform: scale(1); }
+    100% { transform: scale(1); }
+  }
+  @keyframes smaller {
+    0% { transform: scale(1); }
+    30% { transform: scale(0); }
+    100% { transform: scale(0); }
+  }
+
+  @keyframes checkbox-check{
+    0%{
+      width: 0;
+      height: 0;
+      border-color: #212121;
+      
+    }
+    33%{
+      width: .2em;
+      height: 0;
+     
+    }
+    100%{    
+      width: .2em;
+      height: .5em;    
+      border-color: #212121;
+      
+    }
+  }
+  @keyframes shrink-bounce{
+    0%{
+      transform: scale(1);
+    }
+    33%{    
+      transform: scale(.85);
+    }
+    100%{
+      transform: scale(1);    
+    }
+  }
+
 

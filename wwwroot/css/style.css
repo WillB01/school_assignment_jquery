@@ -5,9 +5,30 @@
    
 }
 a{
-    color: white;
+    color: #34495e;
     font-family: 'Archivo', sans-serif;
 }
+h3{
+    color: white;
+}
+h1{
+    width: 100%;
+   margin-bottom: 1em;
+    color: #3498db;
+
+    color: #111; font-family: 'Helvetica Neue', 
+    sans-serif;
+    font-size: 3em;
+     font-weight: bold; letter-spacing: -1px; 
+     line-height: 1; 
+    
+    
+}
+.hr-one{
+    border-top: 5px double #8c8b8b;
+    
+}
+
 a:hover{
     text-decoration: none;
     border:none;
@@ -26,16 +47,18 @@ button {
         max-width: 180px;
         text-decoration: none;
         border-radius: 4px;
-        padding: 10px 20px;
+        padding: 0.5em 1em;
         background: white;
         cursor: pointer;
-        border: none;
+        border: 0.3em solid  #34495e;
         outline:none;
+        margin-bottom: 1em;
+          
+
 }
 
 button {
-    color: rgba(30, 22, 54, 0.6);
-    box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+   
     
 }
 button:focus{
@@ -44,8 +67,25 @@ button:focus{
 
 button:hover {
     color: rgba(255, 255, 255, 0.85);
-    box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+    background: #5CA375;
     animation: shrink-bounce 200ms cubic-bezier(.4,.0,.23,1);
+}
+
+.hidden{
+    display: none;
+}
+
+.show{
+    display: block;
+}
+
+#search-btn{
+    cursor: pointer;
+}
+.input-wrapper:hover{
+    margin0 auto; 
+    cursor: pointer;
+    
 }
 
 
@@ -56,14 +96,14 @@ button:hover {
     
 }
 
-#search-input {
+/* #search-input {
     width: 70%;
     color: rgba(30, 22, 54, 0.6);
     box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
     border: none;
     border-radius: 4px;
-    padding: 1em;
-}
+    padding: 0.5em 1em;
+} */
 
 
 
@@ -73,15 +113,13 @@ button:hover {
     
 }
 
-h1{
-    width: 100%;
-    margin: 0.5em;
-    color: #f3f3f3;
-    font-weight: 50pz;
-    
-   
-   
+#fieldset{
+    background: white;
+    border-radius: 1em;
+    display: inline-block;
+    padding: 1em;
 }
+
 
 #flex-container{
     display: flex;
@@ -94,26 +132,41 @@ h1{
 #search-container{
     width: 30%;
    box-sizing: border-box;
-  border-radius:0 20px 0 0;
+  
+   /* background: #34495e;  */
+
  
     flex-shrink: inherit;
   
 }
 
+
+
 #main-content{
     overflow: scroll;
     width: 70%;
-    background: #2A363B;
+    background: #4799B7;
     border-radius:0 20px 0 0;
     
 }
 
 #show-data{
-    background: #FF847C;
+   
     padding:2em;
     
     
     
+}
+
+
+
+.stop-container{
+    padding: 1em;
+    
+    background: white;
+    color: #34495e;
+    margin: 1em auto;
+    border-radius: 0.5em; 
 }
 
 
@@ -128,14 +181,48 @@ h1{
 
 
 #form-stop{
-   
+   margin: 1em auto;
+    height: 200px;
+    border-radius: 0 0 5px 0;
+    background-color: #fff;
+    overflow: hidden;
+  }
+
+  #search-input {
+    border: 0.3em solid #34495e;
+    
+    padding: 10px 15px;
+    font: small-caption;
+    font-size: 12px;
+    font-size: 0.8rem;
+    width: calc(100% - 50px);
+    color: #34495e;
+
+    outline: none;
+    line-height: 1.5;
+  }
+
+  .input-wrapper{
+    width: 100%;
+    max-width: 320px;
+    border-radius: 5px;
+    background-color: #34495e;
+    overflow: hidden;
+    margin-top: 1em;
+  }
+
+  .fa-search{
+      color: white;
+      margin-left: 0.5em;
+  }
+  
  
     /* border-right: 0.5em solid rgb(255, 209, 124); */
   
+   
+
     
-    padding: 2em;
-    
-}
+
 
 .dim {
     cursor: pointer;
@@ -154,6 +241,7 @@ h1{
     height: 120px;
     -webkit-animation: spin 2s linear infinite; /* Safari */
     animation: spin 2s linear infinite;
+    margin: 10% auto;
   
   }
 
@@ -187,7 +275,8 @@ h1{
 #checkbox-container{
     margin: 1em auto;
     height: 150px;
-    float: left;
+    
+    
     
     
 }
@@ -199,7 +288,7 @@ h1{
 
 .checkboxtext{
     color: rgba(30, 22, 54, 0.6);
-    font-size: 0.8em;
+    font-size: 0.6em;
     
 }
 input[type="checkbox"] { 
@@ -211,7 +300,7 @@ input[type="checkbox"] + label {
        /* defines the size of the check box */
 
     cursor: pointer;
-    font-size:  1.5em;
+    font-size:  1.3em;
     -moz-border-radius: 70px;
     -webkit-border-radius: 70px;
     transition: ease-in-out 20ms;
@@ -227,7 +316,7 @@ input[type="checkbox"] + label i {
     -moz-border-radius: 70px;
     -webkit-border-radius: 70px;
     border-radius: 70px;
-    color: rgba(30, 22, 54, 0.6);
+    color:#34495e;
     
     
 }
@@ -246,6 +335,7 @@ input[type="checkbox"]:not(:checked) + label i{
 }
 input[type="checkbox"]:checked + label .checkboxtext{
     color: #5CA375;
+
     animation: bigger 200ms cubic-bezier(.4,.0,.23,1);
   
     

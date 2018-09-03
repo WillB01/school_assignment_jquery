@@ -38,8 +38,10 @@ let searchRealTime = "api/realtime/";
 let searchStopsUrl = "api/search/";
 let userSearchInput = "";
 let output = "";
-let isClicked = false;
-let buttonCounter = 0;
+let isBuss = false;
+let isPendel = false;
+let isTunnelbana = false;
+
 
 //data-loaded PARENT
 //toggle display none
@@ -49,9 +51,14 @@ let buttonCounter = 0;
 //window START
 $(function () {
 
-
+   
 
     let userTime = new Date($.now());
+
+    $("#search-input").click(() => {
+        $("#fieldset").removeClass("hidden");
+        $("#fieldset").addClass("show");
+    });
 
     $("#search-input").keyup((e) => {
         let key = event.which;
@@ -63,6 +70,12 @@ $(function () {
         resetShowData();
         userSearchInput = e.target.value;
         searchWithEnterKey(getStopLocation, e);
+        $(document).ajaxStart(function () {
+            $(".loader").addClass("start");
+        });
+        $(document).ajaxComplete(function () {
+            $(".loader").removeClass("start");
+        });
 
     });
 
@@ -75,6 +88,7 @@ $(function () {
     $("#search-btn").on("click", function () { //Get Stops
         resetShowData();
         getStopLocation();
+        
         $(document).ajaxStart(function () {
             $(".loader").addClass("start");
         });
@@ -83,6 +97,7 @@ $(function () {
         });
     });
 
+    
 
 
 
@@ -113,9 +128,37 @@ $(function () {
         $.get(searchStopsUrl + userSearchInput, function (response) {
             let stopAndId = [];
             output +=
-                `<h3 class="stations">Hållplatser:</h3>
+                `
+        
+                <fieldset id="fieldset">
+                   
+              
+
+                    <div id="checkbox-container">
+                    
+                        <input type="checkbox" id="checkbox-tbanna" />
+                        <label for="checkbox-tbanna" class="checkbox-tbanna-class checkbox-all">
+                            <i class="far fa-square"></i><span class="checkboxText">tunnelbanna</span>
+                        </label>
+
+                        <input type="checkbox" id="checkbox-buss" />
+                        <label for="checkbox-buss" class="checkbox-buss-class checkbox-all">
+                            <i id="fa-square-buss" class="far fa-square"></i><span class="checkboxText">buss</span>
+                        </label>
+                        <input type="checkbox" id="checkbox-pendel" />
+                        <label for="checkbox-pendel" class="checkbox-pendel-class checkbox-all">
+                            <i class="far fa-square"></i><span class="checkboxText">pendel</span>
+                        </label>
+
+                    </div>
+                    <a class="update-data hidden" href="#">updatera</a>
+                   
+                   
+                </fieldset>
+                
                 <div class="show-time-container">
                     <a href="#" class="info"></a>
+                    
                 </div>
                 
                 <div>
@@ -124,9 +167,16 @@ $(function () {
             $.each(response, function (key, value) {
                 for (let i = 0; i < value.length; i++) {
                     output +=
-                        `<div class="${value[i].name}-container dim">
-                        <a href="#" class="specific-station ${value[i].id} ${value[i].name} dim" data-type="unloaded">${value[i].name}</a>        
-                    </div>`;
+                        `
+                        <div class="${value[i].name}-container dim">
+                        <div class="stop-container">
+                        
+                        <a href="#" class="specific-station ${value[i].id} ${value[i].name} dim" data-type="unloaded">${value[i].name}</a>  
+                              
+                        </div>
+                    </div>
+                    `
+                    ;
                     stopAndId.push({
                         'name': value[i].name,
                         'id': value[i].id
@@ -136,31 +186,22 @@ $(function () {
 
 
             output += "</div>"
-            document.querySelector("#show-data").innerHTML = output + " " + userTime;
+            document.querySelector("#show-data").innerHTML = output;
 
             console.log(stopAndId[0]);
 
             $('.dim').click(function (event) {
                 $(document).ajaxStart(function () {
-                    // $( ".info" ).text( "Loading" );
                     $(".loader").addClass("start");
                     $("#show-data").css("display", "none");
                 });
                 $(document).ajaxComplete(function () {
                     $("#show-data").css("display", "block");
-
-                    // $(`.info`).text( "Visa tider" );
-
                     $(".loader").removeClass("start");
                     $(`.stations`).html(`Hållplats: ${event.target.innerHTML}`);
-                    $(`.${event.target.classList[1]}`).css("color", "red");
-                    // $(`.${event.target.classList[1]}`).html("tider");
-                    // $(".info").click(function(e) {
-                    //     $(`.${event.target.innerHTML}`).click(function(e){
-                    //         e.target.innerHTML = "kewl";
-                    //     }); 
-                    //         return false;
-                    //   });
+                    $(`.${event.target.classList[1]}`).css("color", "#47D98B");
+                    $(`.${event.target.classList[1]}`).children.removeClass("stop-container") //TODO//////////////////////////////////////////
+                 
                 });
 
                 if ($(this).attr("data-type") === "unloaded") {
@@ -195,6 +236,11 @@ $(function () {
 //----------------------------
 let getDepatureTime = (stopAndId, userClickStation) => {
     let id;
+    let product;
+    let productTwo;;
+    let checkT = $("#checkbox-tbanna").prop("checked");
+    let checkB = $("#checkbox-tbanna").prop("checked");
+    let checkP = $("#checkbox-tbanna").prop("checked");
 
     for (const key in stopAndId) {
         if (stopAndId.hasOwnProperty(key)) {
@@ -207,21 +253,55 @@ let getDepatureTime = (stopAndId, userClickStation) => {
 
         }
     }
-    $.get(searchRealTime + id, function (response) {
+
+    const BUS = 128;
+    const PENDEL = 16;
+    const TUNNELBANA = 32;
+    if (isBuss && isPendel && isTunnelbana) {
+        product;
+        productTwo;
+    }
+    if (isBuss && !isPendel && !isTunnelbana) {
+        product = BUS;
+    }
+    if (!isBuss && isPendel && !isTunnelbana) {
+        product = PENDEL;
+    }
+    if (!isBuss && !isPendel && isTunnelbana) {
+        product = TUNNELBANA;
+    }
+    //buss------------------------------------
+    if (isBuss && isPendel && !isTunnelbana) {
+        product = BUS;
+        productTwo = PENDEL;
+    }
+    if (isBuss && !isPendel && isTunnelbana) {
+        product = BUS;
+        productTwo = TUNNELBANA;
+    }
+    if (!isBuss && isPendel && isTunnelbana) {
+        product = PENDEL;
+        productTwo = TUNNELBANA;
+    }
+  
+
+    
+    console.log(product + " " + productTwo);
+    $.get(searchRealTime + id + "/" + product + "/" + productTwo, function (response) {
         $.each(response, function (key, value) {
             for (let i = 0; i < value.length; i++) {
                 console.log(value[i].time + " " + value[i].name);
-                output = `<p class="depature hidden">${value[i].time} ${value[i].direction} ${value[i].name}</p>`;
-                $(`.${id}`).after(`<div>${output}</div>`);
-
-                // $(`.${id}`).after($(`<p class="depature">${value[i].time} ${value[i].direction}</p>` ));
-                // $(`<p class="depature">${value[i].time} ${value[i].direction}</p>` ).insertAfter(`.${id}`);
+                output = `<p class="depature hidden">${value[i].time} ${value[i].direction} ${value[i].name}</p>
+                
+                `;
+                $(`.${id}`).after(`<div>${output}</div> `);
             }
         });
 
     });
+
     console.log(id);
-    
+
 };
 
 
@@ -232,62 +312,109 @@ let resetShowData = () => {
     output = "";
 };
 
-$(".specific-station").click(function(){
+$(".specific-station").click(function () {
     $("specific-station").addClass("specific-station-effect");
 });
 
 
 
+
 ///////////////////////CHECKBOX
-$(document).ready(function () {
+$(document).ajaxComplete(checkboxLogic);
+$(document).ajaxComplete(atctivateRefreshData);
+$(document).ajaxComplete(() =>{
+    $( ".stop-container" ).click(function() {
+        let text = $(".stop-container").text();
+         $(".update-data").html(text);
+      });
+      
+      
+      
+});
+
+function atctivateRefreshData(){
+    $(".update-data").click(() => {
+        alert("message");
+        getStopLocation();
+    });
+    
+};
+
+
+function showUpdate(){
+    if(isBuss || isPendel || isTunnelbana){
+        $(".update-data").removeClass("hidden");
+        
+        $(".update-data").html("refresh");
+    }else{
+        $(".update-data").addClass("hidden");
+    }
+}
+
+
+function checkboxLogic(){
+   
     $("#checkbox-tbanna").on("click", function () {
         let check = $("#checkbox-tbanna").prop("checked");
-        
+
         if (check) {
             if ($('.checkbox-tbanna-class i').hasClass('fa-square')) {
                 $('.checkbox-tbanna-class i').removeClass('fa-square').addClass('fa-check-square');
+                isTunnelbana = true;
+                console.log(isTunnelbana);
+                showUpdate();
                 
+
             }
         } else {
             if ($('.checkbox-tbanna-class i').hasClass('fa-check-square')) {
                 $('.checkbox-tbanna-class i').removeClass('fa-check-square').addClass('fa-square');
                
+                isTunnelbana = false;
+                console.log(isTunnelbana);
+                showUpdate();
             }
         }
-        
+
     });
+ 
     $("#checkbox-pendel").on("click", function () {
         let check = $("#checkbox-pendel").prop("checked");
-        
+       
         if (check) {
             if ($('.checkbox-pendel-class i').hasClass('fa-square')) {
                 $('.checkbox-pendel-class i').removeClass('fa-square').addClass('fa-check-square');
-                
+                isPendel = true;
+                showUpdate();
+
+              
             }
         } else {
             if ($('.checkbox-pendel-class i').hasClass('fa-check-square')) {
                 $('.checkbox-pendel-class i').removeClass('fa-check-square').addClass('fa-square');
-               
+                isPendel = false;
+                showUpdate();
             }
         }
-        
+
     });
     $("#checkbox-buss").on("click", function () {
         let check = $("#checkbox-buss").prop("checked");
-        
+
         if (check) {
             if ($('.checkbox-buss-class i').hasClass('fa-square')) {
                 $('.checkbox-buss-class i').removeClass('fa-square').addClass('fa-check-square');
-                
+                isBuss = true;
+                showUpdate();
+
             }
         } else {
             if ($('.checkbox-buss-class i').hasClass('fa-check-square')) {
                 $('.checkbox-buss-class i').removeClass('fa-check-square').addClass('fa-square');
-               
+                isBuss = false;
+                showUpdate();
             }
         }
-        
+
     });
-    
-    
-});
+}

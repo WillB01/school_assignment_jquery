@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
-    
+
     <script src="scripts/bundle.js"></script>
 
 </head>
@@ -10,33 +10,42 @@
 <body class="site">
     <div id="flex-container">
         <div id="search-container">
-            <!-- <h1>
-                Transport funport
-            </h1> -->
+            
+                <!-- <h1>
+                        Transport Finder
+                        <i class="fas fa-subway"></i>
+                </h1> -->
             <form id="form-stop">
-                <input id="search-input" type="text" placeholder="Hållplats" aria-label="Search">
-                <fieldset>
+                    <div class="input-wrapper">
+                            <input id="search-input" type="text" placeholder="Hållplats" aria-label="Search">
+                            <i id="search-btn" class="fas fa-search"></i>
+                    </div>
+                <!-- <fieldset id="fieldset" class="">
+                   
+                    <hr class="hr-one">
+
                     <stops></stops>
                     <div id="checkbox-container">
-                            <input type="checkbox" id="checkbox-tbanna" />
-                            <label for="checkbox-tbanna" class="checkbox-tbanna-class checkbox-all">
-                                    <i class="far fa-square"></i><span class="checkboxText">tunnelbanna</span>
-                            </label>
+                    
+                        <input type="checkbox" id="checkbox-tbanna" />
+                        <label for="checkbox-tbanna" class="checkbox-tbanna-class checkbox-all">
+                            <i class="far fa-square"></i><span class="checkboxText">tunnelbanna</span>
+                        </label>
 
-                            <input type="checkbox" id="checkbox-buss" />
-                            <label for="checkbox-buss" class="checkbox-buss-class checkbox-all">
-                                    <i id="fa-square-buss" class="far fa-square"></i><span class="checkboxText">buss</span>
-                            </label>
-                            <input type="checkbox" id="checkbox-pendel" />
-                            <label for="checkbox-pendel" class="checkbox-pendel-class checkbox-all">
-                                    <i class="far fa-square"></i><span class="checkboxText">pendel</span>
-                            </label>
-                            
-                            
+                        <input type="checkbox" id="checkbox-buss" />
+                        <label for="checkbox-buss" class="checkbox-buss-class checkbox-all">
+                            <i id="fa-square-buss" class="far fa-square"></i><span class="checkboxText">buss</span>
+                        </label>
+                        <input type="checkbox" id="checkbox-pendel" />
+                        <label for="checkbox-pendel" class="checkbox-pendel-class checkbox-all">
+                            <i class="far fa-square"></i><span class="checkboxText">pendel</span>
+                        </label>
+
+
                     </div>
-
-                </fieldset>
-                <button id="search-btn" type="button">Search</button>
+                   
+                </fieldset> -->
+                <!-- <button id="search-btn" type="button">Search</button> -->
             </form>
 
         </div>
@@ -46,7 +55,8 @@
         </main>
         <!-- <div class="info"></div> -->
     </div>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+        crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </body>

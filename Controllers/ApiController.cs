@@ -14,9 +14,9 @@ namespace Lernia.Controllers
         const string REALTIME_KEY = "d90842cf-a47f-4d3d-a7c0-8a9243ff1ea4";
 
         [Route("search/{term}")]
-        public async Task Search([FromRoute] string term)
+        public async Task Search([FromRoute] string term,[FromRoute] string products)
         {         
-            await Query($"https://api.resrobot.se/v2/location.name?key={SEARCH_KEY}&input={term}&format=json");
+            await Query($"https://api.resrobot.se/v2/location.name?key={SEARCH_KEY}&input={term}&products={products}&format=json");
         }
 
         [Route("deviations/{siteId}")]
@@ -31,10 +31,10 @@ namespace Lernia.Controllers
             await Query($"http://api.sl.se/api2/TravelplannerV3/trip.json?key={TRIP_KEY}&originId={fromId}&destId={toId}&searchForArrival=0&realtime={includeRealtime}");
         }
 
-        [Route("realtime/{siteId}")]
-        public async Task Realtime([FromRoute] int siteId)
+        [Route("realtime/{siteId}/{product}/{productTwo}")]
+        public async Task Realtime([FromRoute] int siteId,[FromRoute] int product,[FromRoute] int productTwo)
         {
-            await Query($"https://api.resrobot.se/v2/departureBoard?key={REALTIME_KEY}&id={siteId}&maxJourneys=10&format=json");
+            await Query($"https://api.resrobot.se/v2/departureBoard?key={REALTIME_KEY}&id={siteId}&maxJourneys=10&products={product + productTwo}&format=json");
 
             // await Query($"http://api.sl.se/api2/realtimedeparturesv4.json?key={REALTIME_KEY}&siteid={siteId}&timewindow={timeWindow}");
         }
